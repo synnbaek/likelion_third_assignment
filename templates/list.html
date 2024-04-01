@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 리스트</title>
+    <style>
+        .blog-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .blog-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .blog-content {
+            font-size: 16px;
+        }
+        .create-btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>블로그 리스트</h1>
+    <a href="{% url 'create' %}" class="create-btn">작성하기</a> <!-- 작성하기 버튼 -->
+    {% for blog in blogs %}
+    <div class="blog-item">
+        <h2 class="blog-title">{{ blog.title }}</h2>
+        <p class="blog-content">{{ blog.content | slice:":200" }}</p> <!-- 내용의 일부만 보여주기 -->
+        <a href="{% url 'detail' blog.id %}">자세히 보기</a>
+    </div>
+    {% endfor %}
+</body>
+</html>

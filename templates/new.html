@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 글 작성하기</title>
+</head>
+<body>
+    <h1>새 글 작성하기</h1>
+    <form action="{% url 'create'%}" method="POST">
+        {% csrf_token %}
+        <!-- 이전에 입력된 값들을 hidden input으로 전달 -->
+        <input type="hidden" name="prev_title" value="{{ request.POST.title }}" />
+        <input type="hidden" name="prev_content" value="{{ request.POST.content }}" />
+
+        제목 : <input type="text" name="title" value="{{ request.POST.title }}" />
+        본문 : <textarea name="content" id="" cols="30" rows="10">{{ request.POST.content }}</textarea>
+        <input type="submit" value="작성하기" />
+    </form>
+
+    <!-- 입력된 값 출력 -->
+    {% if request.POST.prev_title %}
+        <h2>이전에 입력된 제목:</h2>
+        <p>{{ request.POST.prev_title }}</p>
+    {% endif %}
+
+    {% if request.POST.prev_content %}
+        <h2>이전에 입력된 본문:</h2>
+        <p>{{ request.POST.prev_content }}</p>
+    {% endif %}
+
+    <!-- 새로 입력된 값 출력 -->
+    {% if request.POST.title != request.POST.prev_title %}
+        <h2>새로 입력된 제목:</h2>
+        <p>{{ request.POST.title }}</p>
+    {% endif %}
+
+    {% if request.POST.content != request.POST.prev_content %}
+        <h2>새로 입력된 본문:</h2>
+        <p>{{ request.POST.content }}</p>
+    {% endif %}
+</body>
+</html>
